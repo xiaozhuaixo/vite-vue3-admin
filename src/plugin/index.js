@@ -1,0 +1,1 @@
+export { setUpIcon } from "../icons";
