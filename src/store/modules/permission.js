@@ -1,3 +1,4 @@
+import { routes } from '@/router'
 
 
 /**
@@ -14,18 +15,18 @@ function hasPermission(roles, route) {
 }
 
 /**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
+ * Filter routing tables by recursion
+ * @param routes Routes
  * @param roles
  */
-export function filterAsyncRoutes(routes, roles) {
+function filterRoutes(routes, roles) {
   const res = []
 
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+        tmp.children = filterRoutes(tmp.children, roles)
       }
       res.push(tmp)
     }
@@ -40,25 +41,17 @@ const state = {
 }
 
 const mutations = {
-  SET_ROUTES: (state, routes) => {
-    state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
+  SET_ROUTES: (state, routers) => {
+    // state.addRoutes = routes
+    state.routes = routers
   }
 }
 
 const actions = {
   generateRoutes({ commit }, roles) {
-    return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
-    })
-  }
+    let accessedRoutes = filterRoutes(routes, roles)
+    commit("SET_ROUTES", accessedRoutes)
+  },
 }
 
 export default {

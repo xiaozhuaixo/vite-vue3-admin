@@ -6,26 +6,17 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
-        <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
 
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="profilePhoto" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <template #dropdown>
             <el-dropdown-menu>
-                <router-link to="/profile/index">
+                <router-link to="/">
                     <el-dropdown-item>Profile</el-dropdown-item>
                 </router-link>
                 <router-link to="/">
@@ -50,21 +41,21 @@
 <script>
 import { defineAsyncComponent } from 'vue'
 import { mapGetters } from 'vuex'
-
+import logoImg from '@/assets/logo.png'
 
 export default {
   components: {
     Breadcrumb: defineAsyncComponent(() => import('@/components/Breadcrumb')),
     Hamburger: defineAsyncComponent(() => import('@/components/Hamburger')),
-    ErrorLog: defineAsyncComponent(() => import('@/components/ErrorLog')),
-    Screenfull: defineAsyncComponent(() => import('@/components/Screenfull')),
-    SizeSelect: defineAsyncComponent(() => import('@/components/SizeSelect')),
-    Search: defineAsyncComponent(() => import('@/components/HeaderSearch'))
   },
+    data(){
+      return {
+          profilePhoto: logoImg
+      }
+    },
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar',
       'device'
     ])
   },

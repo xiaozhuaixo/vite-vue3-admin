@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import viteSvgIcons from 'vite-plugin-svg-icons'
 import { resolve } from "path";
 
 // search path
@@ -41,7 +42,12 @@ export default defineConfig({
     },
   },
   plugins: [
-      vue(),vueJsx()
+      vue(),
+      vueJsx(),
+      viteSvgIcons({
+        iconDirs: [resolve(process.cwd(), 'src/icons/svg')],
+        symbol: 'icon-[dir]-[name]'
+      })
   ],
   resolve: {
     alias,

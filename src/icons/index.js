@@ -1,11 +1,7 @@
 import SvgIcon from '@/components/SvgIcon'
+import * as Icons from '@element-plus/icons-vue'
 export function setUpIcon(app){
     app.component('svg-icon', SvgIcon)
-    const modulesFiles = import.meta.globEager('./svg/*.svg')
-    let modules = {}
-    for(const file in modulesFiles){
-        modules[file.replace(/(\.\/svg\/|\.svg)/g, '')] = modulesFiles[file].default
-    }
-
+    Object.keys(Icons).forEach(key => app.component(key, Icons[key]))
 }
 

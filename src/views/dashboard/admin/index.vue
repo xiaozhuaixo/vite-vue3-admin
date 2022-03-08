@@ -6,6 +6,13 @@
 
         <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
 <!--            <line-chart :chart-data="lineChartData" />-->
+            <h1>123</h1>
+            <el-button type="primary">
+                <el-icon style="vertical-align: middle;">
+                    <search />
+                </el-icon>
+                <span style="vertical-align: middle;"> Search </span>
+            </el-button>
         </el-row>
 
         <el-row :gutter="32">
@@ -41,9 +48,10 @@
 </template>
 
 <script>
-export default{
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'index'
-}
+})
 </script>
 
 

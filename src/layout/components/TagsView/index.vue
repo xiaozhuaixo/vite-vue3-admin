@@ -26,11 +26,13 @@
 </template>
 
 <script>
-import ScrollPane from './ScrollPane'
-import path from 'path'
+import { defineAsyncComponent } from 'vue'
+import path from "path-browserify"
 
 export default {
-  components: { ScrollPane },
+  components: {
+      ScrollPane: defineAsyncComponent(() => import('./ScrollPane'))
+  },
   data() {
     return {
       visible: false,
@@ -114,7 +116,7 @@ export default {
       this.$nextTick(() => {
         for (const tag of tags) {
           if (tag.to.path === this.$route.path) {
-            this.$refs.scrollPane.moveToTarget(tag)
+            this.$refs.scrollPane.moveToTarget(tag, tags)
             // when query is different then update
             if (tag.to.fullPath !== this.$route.fullPath) {
               this.$store.dispatch('tagsView/updateVisitedView', this.$route)

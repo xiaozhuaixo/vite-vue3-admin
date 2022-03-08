@@ -1,19 +1,18 @@
-import variables from '@/styles/element-variables.scss'
+import variables from '@/styles/element-variables.module.scss' //vite css Pre-processors
 import defaultSettings from '@/settings'
 
-const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings
+const { tagsView, fixedHeader, sidebarLogo, title } = defaultSettings
 
 const state = {
   theme: variables.theme,
-  showSettings: showSettings,
   tagsView: tagsView,
   fixedHeader: fixedHeader,
-  sidebarLogo: sidebarLogo
+  sidebarLogo: sidebarLogo,
+  title: title
 }
 
 const mutations = {
   CHANGE_SETTING: (state, { key, value }) => {
-    // eslint-disable-next-line no-prototype-builtins
     if (state.hasOwnProperty(key)) {
       state[key] = value
     }

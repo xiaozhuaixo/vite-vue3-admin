@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 
 import Layout from '@/layout'
+import routers  from './modules/index'
 
-const routes = [
+export let routes = [
   {
     path: '/',
     redirect: '/login',
@@ -12,11 +13,6 @@ const routes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
   {
@@ -44,9 +40,19 @@ const routes = [
   },
 ]
 
-const router = createRouter({
-  history: createWebHistory(),
+
+routes = routes.concat(routers)
+
+const createRoute = () => createRouter({
+  history: createWebHashHistory(),
   routes
 })
+
+const router = createRoute()
+
+export function resetRouter(){
+  const newRouter = createRoute();
+  router.resolve = newRouter.resolve
+}
 
 export default router

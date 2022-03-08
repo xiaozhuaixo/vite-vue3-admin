@@ -5,30 +5,30 @@ import Layout from '@/layout'
 const chartsRouter = {
   path: '/charts',
   component: Layout,
-  redirect: 'noRedirect',
   name: 'Charts',
   meta: {
     title: 'Charts',
-    icon: 'chart'
+    icon: 'chart',
+    roles: ['admin']
   },
   children: [
     {
       path: 'keyboard',
       component: () => import('@/views/charts/keyboard'),
       name: 'KeyboardChart',
-      meta: { title: 'Keyboard Chart', noCache: true }
+      meta: { title: 'Keyboard Chart', roles: ['admin'] }
     },
     {
       path: 'line',
       component: () => import('@/views/charts/line'),
       name: 'LineChart',
-      meta: { title: 'Line Chart', noCache: true }
+      meta: { title: 'Line Chart', roles: ['admin']}
     },
     {
       path: 'mix-chart',
       component: () => import('@/views/charts/mix-chart'),
       name: 'MixChart',
-      meta: { title: 'Mix Chart', noCache: true }
+      meta: { title: 'Mix Chart', roles: ['admin'] }
     }
   ]
 }

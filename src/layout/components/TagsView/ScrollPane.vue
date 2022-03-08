@@ -6,7 +6,7 @@
 
 <script>
 const tagAndTagSpacing = 4 // tagAndTagSpacing
-
+import {  getCurrentInstance } from 'vue'
 export default {
   name: 'ScrollPane',
   data() {
@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     scrollWrapper() {
-      return this.$refs.scrollContainer.$refs.wrap
+      return this.$refs.scrollContainer.$refs.wrap$
     }
   },
   mounted() {
@@ -34,11 +34,12 @@ export default {
     emitScroll() {
       this.$emit('scroll')
     },
-    moveToTarget(currentTag) {
+    moveToTarget(currentTag, tags) {
+        const _this = getCurrentInstance()
       const $container = this.$refs.scrollContainer.$el
       const $containerWidth = $container.offsetWidth
       const $scrollWrapper = this.scrollWrapper
-      const tagList = this.$parent.$refs.tag
+      const tagList = tags
 
       let firstTag = null
       let lastTag = null

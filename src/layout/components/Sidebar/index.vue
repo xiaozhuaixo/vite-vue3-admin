@@ -19,13 +19,16 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
 import { mapGetters } from 'vuex'
-import Logo from './Logo'
-import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
+
+import variables from '@/styles/variables.module.scss'
 
 export default {
-  components: { SidebarItem, Logo },
+  components: {
+      SidebarItem: defineAsyncComponent(() => import('./SidebarItem')),
+      Logo: defineAsyncComponent(() => import('./Logo')),
+  },
   computed: {
     ...mapGetters([
       'permission_routes',
@@ -34,7 +37,6 @@ export default {
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
