@@ -24,7 +24,7 @@ function filterRoutes(routes, roles) {
 
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
+    if (hasPermission(roles, tmp) && !route.hidden) {
       if (tmp.children) {
         tmp.children = filterRoutes(tmp.children, roles)
       }

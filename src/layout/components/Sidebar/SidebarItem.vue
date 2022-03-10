@@ -1,27 +1,28 @@
 <template>
-  <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
-    </template>
-
+    <div v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !item.alwaysShow">
+        <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+            <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+                <MenuIcon :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"/>
+                <template #title>
+                    <item :title="onlyOneChild.meta.title" />
+                </template>
+            </el-menu-item>
+        </app-link>
+    </div>
     <el-sub-menu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template #title>
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
-      />
+        <template #title>
+            <MenuIcon v-if="item.meta" :icon="item.meta.icon" />
+            <item v-if="item.meta" :title="item.meta.title" />
+        </template>
+        <sidebar-item
+                v-for="child in item.children"
+                :key="child.path"
+                :is-nest="true"
+                :item="child"
+                :base-path="resolvePath(child.path)"
+                class="nest-menu"
+        />
     </el-sub-menu>
-  </div>
 </template>
 
 <script>
@@ -34,7 +35,8 @@ export default defineComponent({
   name: 'SidebarItem',
   components: {
       Item: defineAsyncComponent(() => import('./Item')),
-      AppLink: defineAsyncComponent(() => import('./Link'))
+      AppLink: defineAsyncComponent(() => import('./Link')),
+      MenuIcon: defineAsyncComponent(() => import('./MenuIcon'))
   },
   mixins: [FixiOSBug],
   props: {

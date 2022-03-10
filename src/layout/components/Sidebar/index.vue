@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import { mapGetters } from 'vuex'
 
 import variables from '@/styles/variables.module.scss'
 
-export default {
+export default defineComponent({
   components: {
       SidebarItem: defineAsyncComponent(() => import('./SidebarItem')),
       Logo: defineAsyncComponent(() => import('./Logo')),
@@ -52,5 +52,5 @@ export default {
       return !this.sidebar.opened
     }
   }
-}
+})
 </script>
