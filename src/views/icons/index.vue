@@ -1,7 +1,7 @@
 <template>
   <div class="icons-container">
     <aside>
-      <a href="https://panjiachen.github.io/vue-element-admin-site/guide/advanced/icon.html" target="_blank">Add and use
+      <a href="https://github.com/xiaozhuaixo/vite-vue3-admin" target="_blank">Add and use
       </a>
     </aside>
     <el-tabs type="border-card">
