@@ -53,4 +53,23 @@ export default defineConfig({
     alias,
     extensions: ['.vue', '.js', '.json']
   },
+  css: {
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'internal:charset-removal',
+          AtRule: {
+            charset: (atRule) => {
+              if (atRule.name === 'charset') {
+                atRule.remove();
+              }
+            }
+          }
+        }
+      ],
+    },
+  },
+  build: {
+    target: 'esnext'
+  }
 })
