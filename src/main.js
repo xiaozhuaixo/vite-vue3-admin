@@ -28,7 +28,7 @@ function setPlugin(){
 app.use(ElementPlus)
     .use(store)
     .use(router)
-await router.isReady()
+
 app.mount('#app')
 
 setPlugin()
