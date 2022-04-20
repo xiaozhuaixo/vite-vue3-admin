@@ -2,15 +2,18 @@
     <el-row class="app-container" :gutter="10">
         <el-col :span="8">
             <el-card>
+                <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom: 15px;"/>
                 <el-tree
+                        ref="treeRef"
                         :props="props"
                         :load="loadNode"
                         show-checkbox
                         lazy
                         node-key="id"
-                        @node-click="handleNodeClick"
+
                         highlight-current
                         :expand-on-click-node="true"
+                        :filter-node-method="filterNode"
                 >
                     <template #default="{ node, data }">
                     <span class="prefix">
@@ -50,49 +53,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 let id = 1
 let count = 1
 
-const append = (data) => {
-    const newChild = { id: id++, label: 'testtest', children: [] }
-    if (!data.children) {
-        data.children = []
+const treeRef = ref(null)
+const filterText = ref('')
+watch(filterText, (val) => {
+    treeRef.value.filter(val)
+})
+
+const filterNode = (value, data) => {
+    if (!value){
+        return true
     }
-    data.children.push(newChild)
-
-}
-
-const remove = (node, data) => {
-    const parent = node.parent
-    const children = parent.data.children || parent.data
-    const index = children.findIndex((d) => d.id === data.id)
-    children.splice(index, 1)
-
+    return data.name.includes(value)
 }
 
 const props = {
     label: 'name',
     children: 'zones',
     isLeaf: 'leaf',
-    isClick: false,
+    disabled: 'disabled',
 }
 
 const loadNode = (node, resolve) => {
     if (node.level === 0) {
-        return resolve([{ name: 'Root123', isClick: true, }, { name: 'Root2',isClick: false, }])
+        return resolve([{ name: 'Root123', isClick: false,disabled: false, }, { name: 'Root2',isClick: false,disabled: false }])
     }
-    if (node.level > 3) return resolve([])
+    node.data.isClick = !node.data.isClick;
 
-    let hasChild = false
-    if (node.data.name === 'region1') {
-        hasChild = true
-    } else if (node.data.name === 'region2') {
-        hasChild = false
-    } else {
-        hasChild = Math.random() > 0.5
-    }
+    let hasChild = Math.random() > 0.5
 
     setTimeout(() => {
         let data = []
@@ -101,22 +93,22 @@ const loadNode = (node, resolve) => {
                 {
                     name: `zone${count++}`,
                     isClick: false,
+                    disabled: false
                 },
                 {
                     name: `zone${count++}`,
                     isClick: false,
+                    disabled: false
                 },
             ]
         } else {
             data = []
+            node.isLeaf = true;
+            node.data.disabled = true;
         }
 
         resolve(data)
     }, 500)
-}
-
-const handleNodeClick = (data,  node, event) => {
-    data.isClick = !data.isClick;
 }
 
 </script>
