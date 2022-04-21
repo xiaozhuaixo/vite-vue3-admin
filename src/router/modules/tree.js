@@ -13,7 +13,7 @@ const tree = {
         {
             path: 'defaultTree',
             component: () => import('@/views/tree/default/Index'),
-            meta: {icon: '', title: '默认树'},
+            meta: {icon: 'el-aim', title: '默认树'},
             name: 'DefaultTree'
         },
         {
@@ -28,6 +28,12 @@ const tree = {
             component: () => import('@/views/tree/searchTree/Index'),
             meta: {icon: '' ,title: '搜索树'},
         },
+        {
+            path: 'treeFolder',
+            name: 'TreeFolder',
+            component: () => import('@/views/tree/treeFolder/Index'),
+            meta: {icon: 'el-folder' ,title: 'folder'},
+        }
     ]
 }
 

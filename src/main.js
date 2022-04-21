@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import 'virtual:svg-icons-register' // add svg
 import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 import 'normalize.css/normalize.css'
 import './styles/element-variables.module.scss'
@@ -25,7 +26,12 @@ function setPlugin(){
 }
 
 
-app.use(ElementPlus)
+app.use(ElementPlus,{
+    locale: zhCn,
+    button: {
+        autoInsertSpace: true,
+    }
+})
     .use(store)
     .use(router)
 
