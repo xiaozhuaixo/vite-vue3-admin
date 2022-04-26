@@ -6,7 +6,7 @@ const table = {
     name: 'Table',
     component: Layout,
     meta: {
-        icon: 'el-location',
+        icon: 'table',
         title: 'Table',
     },
     children: [

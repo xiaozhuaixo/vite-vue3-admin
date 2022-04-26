@@ -6,7 +6,7 @@ const tree = {
     name: 'Tree',
     component: Layout,
     meta: {
-        icon: 'el-mic',
+        icon: 'tree',
         title: 'Tree',
     },
     children: [

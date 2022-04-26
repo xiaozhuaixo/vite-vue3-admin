@@ -6,7 +6,7 @@ const icon = {
     name: 'Icons',
     component: Layout,
     meta: {
-        icon: 'el-location',
+        icon: 'icon',
         title: 'Icons',
     },
     children: [
