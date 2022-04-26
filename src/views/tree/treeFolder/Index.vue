@@ -8,7 +8,7 @@
                         :props="props"
                         :data="treeData"
                         show-checkbox
-                        node-key="id"
+                        node-key="key"
                         @node-click="handleNodeClick"
                         highlight-current
                         :expand-on-click-node="true"
@@ -27,11 +27,11 @@
                 </el-tree>
             </el-card>
         </el-col>
-        <el-col :span="16">
+        <el-col :span="8">
             <el-card>
                 <el-row :gutter="10">
                     <el-col :span="6" v-for="item in folders" v-if="folders.length > 0">
-                        <div>
+                        <div @dblclick="handleDoubleClick(item)">
                             <div class="folder">
                                 <el-icon>
                                     <component :is="item.icon"/>
@@ -46,11 +46,16 @@
                 </el-row>
             </el-card>
         </el-col>
+        <el-col :span="8">
+            <el-card>
+
+            </el-card>
+        </el-col>
     </el-row>
 </template>
 
 <script setup>
-import { ref, watch, h, resolveComponent } from 'vue'
+import { ref, watch } from 'vue'
 
 let id = 1
 let count = 1
@@ -80,6 +85,7 @@ const props = {
 let treeData = [
     {
         name: '项目',
+        key: 'project',
         isClick: false,
         disabled: false,
         icon: 'folder',
@@ -87,6 +93,7 @@ let treeData = [
         children: [
             {
                 name: '主节点',
+                key: 'main_node',
                 isClick: false,
                 disabled: false,
                 icon: 'folder',
@@ -94,6 +101,7 @@ let treeData = [
                 children: [
                     {
                         name: '主项目',
+                        key: 'main_project',
                         isClick: false,
                         disabled: false,
                         icon: 'school',
@@ -101,6 +109,7 @@ let treeData = [
                         children: [
                             {
                                 name: '环境',
+                                key: 'p',
                                 isClick: false,
                                 disabled: false,
                                 icon: 'wind-power',
@@ -108,6 +117,7 @@ let treeData = [
                             },
                             {
                                 name: 'A点',
+                                key: 'point_a',
                                 isClick: false,
                                 disabled: false,
                                 icon: 'office-building',
@@ -115,6 +125,7 @@ let treeData = [
                             },
                             {
                                 name: 'B点',
+                                key: 'point_b',
                                 isClick: false,
                                 disabled: false,
                                 icon: 'office-building',
@@ -122,6 +133,49 @@ let treeData = [
                             },
                             {
                                 name: 'C点',
+                                key: 'point_c',
+                                isClick: false,
+                                disabled: false,
+                                icon: 'office-building',
+                                leaf: true,
+                            }
+                        ]
+                    },
+                    {
+                        name: '从项目',
+                        key: 'slave_project',
+                        isClick: false,
+                        disabled: false,
+                        icon: 'school',
+                        leaf: false,
+                        children: [
+                            {
+                                name: '环境slave',
+                                key: 'slave_p',
+                                isClick: false,
+                                disabled: false,
+                                icon: 'wind-power',
+                                leaf: true,
+                            },
+                            {
+                                name: 'A点1',
+                                key: 'slave_point_a',
+                                isClick: false,
+                                disabled: false,
+                                icon: 'office-building',
+                                leaf: true,
+                            },
+                            {
+                                name: 'B点1',
+                                key: 'slave_point_b',
+                                isClick: false,
+                                disabled: false,
+                                icon: 'office-building',
+                                leaf: true,
+                            },
+                            {
+                                name: 'C点1',
+                                key: 'slave_point_c',
                                 isClick: false,
                                 disabled: false,
                                 icon: 'office-building',
@@ -133,6 +187,7 @@ let treeData = [
             },
             {
                 name: '主项目2',
+                key: 'project_2',
                 isClick: false,
                 disabled: false,
                 icon: 'folder',
@@ -144,26 +199,36 @@ let treeData = [
 
 const configFolders = (nodes) => {
     folders.value = nodes.map(node => {
+        console.log(node);
         return {
+            id:  node.id,
             isLeaf: node.isLeaf,
             name: node.data.name,
-            icon: node.data.icon
+            icon: node.data.icon,
+            children: node.data.children,
+            key: node.data.key,
         }
     })
 }
 
 
 const handleNodeClick = (data, node, event) => {
-    console.log(node.childNodes, node.childNodes.length)
+    if(node.isLeaf){
+        return;
+    }
     configFolders(node.childNodes)
 }
 
-const renderIcon = (node) => {
-    let elIcon = resolveComponent("el-icon");
-    let elIconChart = resolveComponent(node.icon)
-    return h(elIcon, {}, [
-        elIconChart
-    ])
+const handleDoubleClick = (data) => {
+    if(data.isLeaf){
+        return;
+    }
+    treeRef.value.setCurrentKey(data.key);
+    let node = treeRef.value.getNode(data.key);
+    if(node.isLeaf){
+        return;
+    }
+    configFolders(node.childNodes)
 }
 </script>
 

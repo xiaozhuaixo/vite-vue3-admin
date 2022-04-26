@@ -60,13 +60,6 @@ export default defineComponent({
     background-color: rgb(240, 242, 245);
     position: relative;
 
-    .github-corner {
-        position: absolute;
-        top: 0px;
-        border: 0;
-        right: 0;
-    }
-
     .chart-wrapper {
         background: #fff;
         padding: 16px 16px 0;
