@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import viteSvgIcons from 'vite-plugin-svg-icons'
 import { resolve } from "path";
+import OptimizationPersist from 'vite-plugin-optimize-persist'
+import PkgConfig from 'vite-plugin-package-config'
 
 // search path
 const pathResolve = (dir) => {
@@ -47,7 +49,9 @@ export default defineConfig({
       viteSvgIcons({
         iconDirs: [resolve(process.cwd(), 'src/icons/svg')],
         symbol: 'icon-[dir]-[name]'
-      })
+      }),
+      PkgConfig(),
+      OptimizationPersist()
   ],
   resolve: {
     alias,

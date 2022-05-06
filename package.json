@@ -34,6 +34,22 @@
     "unplugin-auto-import": "^0.5.10",
     "unplugin-vue-components": "^0.17.11",
     "vite": "^2.7.2",
+    "vite-plugin-optimize-persist": "^0.1.2",
+    "vite-plugin-package-config": "^0.1.1",
     "vite-plugin-svg-icons": "^1.1.0"
+  },
+  "vite": {
+    "optimizeDeps": {
+      "include": [
+        "@element-plus/icons-vue",
+        "element-plus",
+        "element-plus/es/locale/lang/zh-cn",
+        "nprogress",
+        "path-browserify",
+        "vue",
+        "vue-router",
+        "vuex"
+      ]
+    }
   }
 }
