@@ -5,6 +5,8 @@ import viteSvgIcons from 'vite-plugin-svg-icons'
 import { resolve } from "path";
 import OptimizationPersist from 'vite-plugin-optimize-persist'
 import PkgConfig from 'vite-plugin-package-config'
+import legacy from '@vitejs/plugin-legacy'
+import importToCDN from 'vite-plugin-cdn-import'
 
 // search path
 const pathResolve = (dir) => {
@@ -51,7 +53,36 @@ export default defineConfig({
         symbol: 'icon-[dir]-[name]'
       }),
       PkgConfig(),
-      OptimizationPersist()
+      OptimizationPersist(),
+      legacy({
+        targets: ['ie >= 11'],
+        additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      }),
+      importToCDN({
+        modules: [
+          {
+            name:'vue',
+            var:'Vue',
+            path:'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.25/vue.global.prod.min.js'
+          },
+          {
+            name:'vuex',
+            var:'Vuex',
+            path:'https://cdnjs.cloudflare.com/ajax/libs/vuex/4.0.2/vuex.global.prod.min.js'
+          },
+          {
+            name:'vue-router',
+            var:'VueRouter',
+            path:'https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.12/vue-router.global.prod.min.js'
+          },
+          {
+            name: 'element-plus',
+            var: 'ElementPlus',
+            path: `https://unpkg.com/element-plus`,
+            css: 'https://unpkg.com/element-plus/dist/index.css',
+          },
+        ]
+      })
   ],
   resolve: {
     alias,
@@ -74,6 +105,6 @@ export default defineConfig({
     },
   },
   build: {
-
+    target: 'es2020',
   }
 })
