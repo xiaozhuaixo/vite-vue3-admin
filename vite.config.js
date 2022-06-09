@@ -63,17 +63,17 @@ export default defineConfig({
           {
             name:'vue',
             var:'Vue',
-            path:'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.25/vue.global.prod.min.js'
+            path:'https://unpkg.com/browse/vue@3.2.25/dist/vue.global.prod.js'
           },
           {
             name:'vuex',
             var:'Vuex',
-            path:'https://cdnjs.cloudflare.com/ajax/libs/vuex/4.0.2/vuex.global.prod.min.js'
+            path:'https://unpkg.com/browse/vuex@4.0.2/dist/vuex.global.prod.js'
           },
           {
             name:'vue-router',
             var:'VueRouter',
-            path:'https://cdnjs.cloudflare.com/ajax/libs/vue-router/4.0.12/vue-router.global.prod.min.js'
+            path:'https://unpkg.com/browse/vue-router@4.0.12/dist/vue-router.global.prod.js'
           },
           {
             name: 'element-plus',
